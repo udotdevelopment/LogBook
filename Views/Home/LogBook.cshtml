@@ -1,0 +1,80 @@
+﻿@using System.Web.UI.WebControls
+@model LogBook.ViewModels.LogBook.LogView
+
+@{
+    ViewBag.Title = "LogBook";
+}
+<br>
+<div class="table">
+    <div class="row">
+        <div class="col-md-5">
+            @*Location Information*@
+            <div class="card ">
+                <div class="card-header">
+                    <div class="table">
+                        <div class="row">
+                            <div class="col-3">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseLocation" aria-expanded="true" aria-controls="collapseLocation">
+                                    Location
+                                </button>
+
+                            </div>
+                            <div class="col-9">
+                                <form class="form-inline my-2 my-lg-0">
+                                    @Html.EditorFor(model => model.SearchId, new {htmlAttributes = new {id= "LocationSearchTextBox", onkeypress = "LocationIdPress(event)", @class = "form-control mr-sm-2 locationSearch" } })
+                                    @*<input id="LocationSearchTextBox" value="@Model.SearchId" onkeypress="LocationIdPress(event)"class="form-control mr-sm-2" type="search" placeholder="Location ID" aria-label="Search">*@
+                                    <div id="LocationSearch" class="btn btn-outline-success my-2 my-sm-0" onclick="GetLogEntryPartialView()">
+                                        Search
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapseLocation" class="collapse show" aria-labelledby="headingLocation">
+                    <div class="card-body">
+                        <div id="LogEntry"></div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="col-md-7">
+            @*Comments Card*@
+            <div id="Comments"></div>
+            <br />
+            @*AIMS Card*@
+            <div id="AIMSWorkOrders"></div>
+            <br />
+            @*MaxView Card*@
+            <div id="MaxViewLogs"></div>
+            <br />
+            @*CyberLock Card*@
+            <div id="CyberLockLogs"></div>
+        </div>
+    </div>
+    @*onload= '@Url.Action("GetLoginInfo", "Home")';*@
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/bundles/cssjqryUi")
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script src="~/Scripts/LogBook.js"></script>
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <script>
+        var urlGetLogEntry = '@Url.Action("GetLogEntry", "Home")';
+        var urlGetComments = '@Url.Action("GetComments", "Home")';
+        var urlGetCommentsResult = '@Url.Action("GetCommentsResult", "Home")';
+        var urlGetMaxViewLogs = '@Url.Action("GetMaxViewLogs", "Home")';
+        var urlGetMaxViewLogsResult = '@Url.Action("GetMaxViewLogsResult", "Home")';
+        var urlGetMaxViewLogsInitialLoad = '@Url.Action("GetMaxViewLogsInitialLoad", "Home")';
+        var urlCyberLockLogs = '@Url.Action("GetCyberLockLogs", "Home")';
+        var urlCyberLockLogsResult = '@Url.Action("GetCyberLockLogsResult", "Home")';
+        var urlAIMSWorkOrders = '@Url.Action("GetAIMSWorkOrders", "Home")';
+        var urlSaveLogBookEntry = '@Url.Action("SaveLogBookEntry", "Home")';
+        var urlAIMSResult = '@Url.Action("GetAIMSResult", "Home")';
+    </script>
+}

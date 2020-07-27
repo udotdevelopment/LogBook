@@ -1,0 +1,79 @@
+﻿@using System.Threading
+@model LogBook.ViewModels.AIMS.WorkorderLogViewModel
+<table class="table table-sm">
+    <tr class="alternatingRow">
+        <th>Date</th>
+        <th>User</th>
+        <th>Work Order #</th>
+        <th>Status</th>
+    </tr>
+    <tr class="alternatingRow">
+        <th></th>
+        <th colspan="3">Short Description</th>
+    </tr>
+    @{
+        int count = 1;
+        string style = string.Empty;
+        
+    }
+    @foreach (var AIMSWorkOrder in Model.WorkorderLogs.OrderByDescending(w => w.DateCreated))
+    {
+        if (count % 2 == 0)
+        {
+            style = "alternatingRow";
+        }
+        else
+        {
+            style = string.Empty;
+        }
+    <tr class="@style">
+        <td nowrap class="@style">@AIMSWorkOrder.DateCreated.ToString("MM/dd/yyyy HH:mm")</td>
+        <td>@AIMSWorkOrder.CreatedByUserName</td>
+        <td><a href="@AIMSWorkOrder.AimsUrl" target="_blank">@AIMSWorkOrder.ExtId</a></td>
+        <td>@AIMSWorkOrder.Status</td>
+    </tr>
+        <tr class="@style">
+            <td></td>
+            <td colspan="3">@HttpUtility.HtmlDecode(AIMSWorkOrder.ShortDescription)</td>
+        </tr>
+        count++;
+    }
+</table>
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.PageNumber > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="javascript:GetAIMSResultPartialView(@(Model.PageNumber - 1))">Prev</a>
+                </li>
+            }
+            
+            @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++)
+            {
+                if (i > 0 && i <= Model.TotalPages)
+                {
+                    if (i == Model.PageNumber)
+                    {
+                        <li class="page-item active">
+                            <a class="page-link" href="javascript:GetAIMSResultPartialView(@i)">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:GetAIMSResultPartialView(@i)">@i</a>
+                        </li>
+                    }
+
+                }
+            }
+            @if (Model.TotalPages > Model.PageNumber)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="javascript:GetAIMSResultPartialView(@(Model.PageNumber + 1))">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

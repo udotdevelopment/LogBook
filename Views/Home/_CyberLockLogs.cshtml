@@ -1,0 +1,17 @@
+﻿@using System.Web.UI.WebControls
+@model LogBook.ViewModels.CyberLock.CyberLockLogViewModel
+
+<div class="card">
+    <div class="card-header">
+        <button onclick="GetCyberLockLogsResultPartialView(1)" class="btn btn-link" data-toggle="collapse" data-target="#collapseCyberLock" aria-expanded="true" aria-controls="collapseCyberLock">
+            CyberLock Log
+            <span id="CyberLockTotalBadge" class="badge badge-light">@Model.TotalNumber</span>
+        </button>
+    </div>
+    <div id="collapseCyberLock" class="collapse" aria-labelledby="headingCyberLock">
+        <div id="CyberLockBody" class="card-body">
+           
+        </div>
+    </div>
+</div>
+

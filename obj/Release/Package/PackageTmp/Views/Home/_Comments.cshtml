@@ -1,0 +1,31 @@
+﻿@using System.Web.UI.WebControls
+@model LogBook.ViewModels.LogBook.LogBookView
+
+<div class="card">
+    <div class="card-header">
+        <div class="table">
+            <div class="row">
+                <div class="col-4">
+                    <button onclick="GetCommentsResultsPartialView(1)" class="btn btn-link" data-toggle="collapse" data-target="#collapseComments" aria-expanded="true" aria-controls="collapseComments">
+                        Comments
+                        <span id="CommentsBadge" class="badge badge-light">@Model.TotalNumber</span>
+                    </button>
+                </div>
+                <div class="col-8">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input id="CommentSearchTextBox" onkeypress = "CommentSearchPress(event)"class="form-control mr-sm-2" type="search" placeholder="Comment Text" aria-label="Search">
+                        <div id="CommentSearch" class="btn btn-outline-success my-2 my-sm-0" onclick="GetCommentsResultsPartialView()">Search</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+    <div id="collapseComments" class="collapse" aria-labelledby="headingComments">
+        <div id="CommentsCardBody" class="card-body">
+            
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,20 @@
+﻿@using System.Web.UI.WebControls
+@model LogBook.ViewModels.MaxView.MaxViewLogViewModel
+
+
+<div class="card">
+    <div class="card-header">
+        <button onclick="GetMaxViewLogsResultPartialView()" class="btn btn-link" data-toggle="collapse" data-target="#collapseMaxView" aria-expanded="true" aria-controls="collapseMaxView">
+            MaxView Log
+            <span class="badge badge-light">@Model.TotalNumber</span>
+        </button>
+</div>
+    <div id="collapseMaxView" class="collapse" aria-labelledby="headingMaxView">
+        <div id="MaxViewCardBody" class="card-body">
+           
+        </div>
+    </div>
+</div>
+
+
+

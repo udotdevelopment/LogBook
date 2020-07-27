@@ -1,0 +1,91 @@
+﻿@using System.Web.UI.WebControls
+@model LogBook.ViewModels.LogBook.LogBookView
+
+@Html.Hidden("CommentsTotalNumber", Model.TotalNumber)
+<table class="table table-sm">
+    <tr class="alternatingRow">
+        <th>Date</th>
+        <th>User</th>
+        <th>Reasons For Response</th>
+    </tr>
+    <tr class="alternatingRow">
+        <th>Location of Response</th>
+        <th colspan="2">Comment</th>
+    </tr>
+    @{
+        int count = 1;
+        string style = string.Empty;
+        
+    }
+    @foreach (var comment in Model.Logs.OrderByDescending(l => l.Timestamp))
+    {
+        if (count % 2 == 0)
+        {
+            style = "alternatingRow";
+        }
+        else
+        {
+            style = string.Empty;
+        }
+        <tr class="@style">
+            <td nowrap>@comment.Timestamp.ToString("MM/dd/yyyy HH:mm")</td>
+            <td>@comment.User</td>
+            <td>
+                @comment.ReasonForResponseCommaSeparated
+
+            </td>
+        </tr>
+        <tr class="@style">
+            <td>@if (comment.Onsite)
+                {
+                <span>Onsite</span>
+                }
+                else
+                {
+                <span>Remote</span>
+                }
+                </td>
+            <td colspan="2">@comment.Comment</td>
+        </tr>
+        count++;
+    }
+</table>
+
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.PageNumber > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="javascript:GetCommentsResultsPartialView(@(Model.PageNumber - 1))">Prev</a>
+                </li>
+            }
+
+            @for (int i = Model.PageNumber - 2; i <= Model.PageNumber + 2; i++)
+            {
+                if (i > 0 && i <= Model.TotalPages)
+                {
+                    if (i == Model.PageNumber)
+                    {
+                        <li class="page-item active">
+                            <a class="page-link" href="javascript:GetCommentsResultsPartialView(@i)">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:GetCommentsResultsPartialView(@i)">@i</a>
+                        </li>
+                    }
+
+                }
+            }
+            @if (Model.TotalPages > Model.PageNumber)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="javascript:GetCommentsResultsPartialView(@(Model.PageNumber + 1))">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

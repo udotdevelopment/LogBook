@@ -1,0 +1,17 @@
+﻿@using System.Web.UI.WebControls
+@model int
+
+<div class="card">
+    <div class="card-header">
+        <button onclick="GetAIMSResultPartialView()" class="btn btn-link" data-toggle="collapse" data-target="#collapseAIMSWorkOrders" aria-expanded="true" aria-controls="collapseAIMSWorkOrders">
+            AIMS Work Orders Log
+            <span class="badge badge-light">@Model</span>
+        </button>
+    </div>
+    <div id="collapseAIMSWorkOrders" class="collapse" aria-labelledby="headingAIMSWorkOrders">
+        <div id="AIMSResults" class="card-body">
+            
+</div>
+    </div>
+</div>
+

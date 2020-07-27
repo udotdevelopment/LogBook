@@ -1,0 +1,107 @@
+﻿@using Microsoft.Ajax.Utilities
+@model LogBook.ViewModels.LogsReport.LogsReportViewModel
+
+@Html.Hidden("CommentsTotalNumber", Model.LogsView.TotalNumber)
+
+<table class="table table-striped">
+    <tr>
+        @if (Model.LogsView.Logs != null)
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.LogsView.Logs[0].Timestamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogsView.Logs[0].DateCreated)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogsView.Logs[0].LocationId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogsView.Logs[0].Intersection)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogsView.Logs[0].OnsiteOrRemote)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.LogsView.Logs[0].Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogsView.Logs[0].User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogsView.Logs[0].ReasonForResponses)
+            </th>
+        }
+    </tr>
+    @foreach (var item in Model.LogsView.Logs.OrderByDescending(l => l.Timestamp))
+    {
+
+        <tr class="">
+            <td>
+                @Html.DisplayFor(modelItem => item.Timestamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Intersection)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OnsiteOrRemote)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReasonForResponseCommaSeparated)
+            </td>
+        </tr>
+    }
+</table>
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.LogsView.PageNumber > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="javascript:GetResultsPartialView(@(Model.LogsView.PageNumber - 1))">Prev</a>
+                </li>
+            }
+
+            @for (int i = Model.LogsView.PageNumber - 2; i <= Model.LogsView.PageNumber + 2; i++)
+            {
+                if (i > 0 && i <= Model.LogsView.TotalPages)
+                {
+                    if (i == Model.LogsView.PageNumber)
+                    {
+                        <li class="page-item active">
+                            <a class="page-link" href="javascript:GetResultsPartialView(@i)">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:GetResultsPartialView(@i)">@i</a>
+                        </li>
+                    }
+
+                }
+            }
+            @if (Model.LogsView.TotalPages > Model.LogsView.PageNumber)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="javascript:GetResultsPartialView(@(Model.LogsView.PageNumber + 1))">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+
